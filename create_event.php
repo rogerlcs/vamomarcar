@@ -46,7 +46,7 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 				$eventoid = $row["max"];
 				$query = "INSERT INTO participa(fk_usuario_codigo, fk_evento_codigo, status_convite) VALUES ('$arrayid[0]', '$descricao', 0)";
 				for ($i=0; $i < sizeof($arrayid); $i++) { 
-					$query .= ",('$arrayid[i]', '$descricao', 0)";
+					$query .= ",($arrayid[i], $eventoid, 0)";
 				}
 				$result1 = pg_query($con, $query);
 				if($result1){
