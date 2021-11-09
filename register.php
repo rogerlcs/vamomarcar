@@ -6,8 +6,7 @@
  */
  
 // connecting to db
-//$con = pg_connect(getenv("DATABASE_URL"));
- $con = pg_connect("host=localhost port=5432 dbname=teste user=postgres password=301224");
+$con = pg_connect(getenv("DATABASE_URL"));
 // array for JSON response
 $response = array();
  
