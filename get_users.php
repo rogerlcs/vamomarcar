@@ -9,10 +9,10 @@ $con = pg_connect(getenv("DATABASE_URL"));
 $username = NULL;
 $password = NULL;
 
-$isAuth = true;
+$isAuth = false;
 
 // Método para mod_php (Apache)
-/*if(isset( $_SERVER['PHP_AUTH_USER'])) {
+if(isset( $_SERVER['PHP_AUTH_USER'])) {
     $username = $_SERVER['PHP_AUTH_USER'];
     $password = $_SERVER['PHP_AUTH_PW'];
 } // Método para demais servers
@@ -31,20 +31,21 @@ if(!is_null($username)){
 			$isAuth = true;
 		}
 	}
-}*/
+}
 
 if(isset($_GET["nome"])){ 
+	$nome = $_GET["nome"];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT * FROM usuario WHERE nome like '%$nome%'")
+		$result = pg_query($con, "SELECT * FROM usuario WHERE nome like '%$nome%'");
 		if(pg_num_rows($result) > 0){
 			$response['users'] = array();
-			while($row = pg_fetch_array()){
+			while($row = pg_fetch_array($result)){
 				$user = array();
 				$user["id"] = $row["codigo"];
 				$user["nome"] = $row["nome"];
-				array_push($response["users"], $user)
+				array_push($response['users'], $user);
 			}
-			$response["success"] = 1
+			$response["success"] = 1;
 		}
 	
 	}
