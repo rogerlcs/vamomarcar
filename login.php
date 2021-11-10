@@ -34,7 +34,7 @@ else {
 		if($password == $row['senha']){
 			$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
 			if(pg_num_rows($query) > 0){
-				$row = pg_fetch_array($query);
+				$row = pg_fetch_array($query1);
 				$response["id"] = $row["codigo"]
 				$response["success"] = 1;
 			}
