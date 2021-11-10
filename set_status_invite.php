@@ -10,7 +10,7 @@ $con = pg_connect(getenv("DATABASE_URL"));
 $username = NULL;
 $password = NULL;
 
-$isAuth = true;
+$isAuth = false;
 
 // Método para mod_php (Apache)
 if(isset( $_SERVER['PHP_AUTH_USER'])) {
