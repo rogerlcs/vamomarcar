@@ -32,7 +32,16 @@ else {
 	if(pg_num_rows($query) > 0){
 		$row = pg_fetch_array($query);
 		if($password == $row['senha']){
-			$response["success"] = 1;
+			$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
+			if(pg_num_rows($query) > 0){
+				$row = pg_fetch_array($query);
+				$response["id"] = $row[codigo]
+				$response["success"] = 1;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = "usuario ou senha não confere";
+			}
 		}
 		else {
 			// senha ou usuario nao confere
