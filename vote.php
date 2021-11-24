@@ -33,7 +33,7 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["idusuario"]) && isset($_POST["iddata"]) && $_POST["idevento"]){ 
+if(isset($_POST["idusuario"]) && isset($_POST["iddata"]) && isset($_POST["idevento"])){ 
 	$idusuario = $_POST["idusuario"];
 	$iddata = $_POST["iddata"];
 	$idevento = $_POST["idevento"];
