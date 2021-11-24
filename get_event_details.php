@@ -52,13 +52,14 @@ if(isset($_GET["idevento"]) && isset($_GET["idusuario"])){
 			$event["endereco"] = $row["endereco"];
 			$event["descricao"] = $row["descricao"];
 			$event["datas"] = array();
-			$resultdata = pg_query($con, "SELECT dt.*,(SELECT count(*) as votos FROM vota join agenda_do_evento as agenda on(vota.fk_idagenda = agenda.idagenda) where agenda.fk_datas_codigo = dt.codigo) FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = $idevento");
+			$resultdata = pg_query($con, "SELECT dt.*,(SELECT count(*) as votos FROM vota join agenda_do_evento as agenda on(vota.fk_idagenda = agenda.idagenda) where agenda.fk_datas_codigo = dt.codigo),(SELECT CASE WHEN EXISTS (SELECT * FROM vota JOIN agenda_do_evento AS agenda ON(vota.fk_idagenda = agenda.idagenda) WHERE vota.fk_usuario_codigo = $idusuario and agenda.fk_datas_codigo = dt.codigo) THEN 1 ELSE 0 END) FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = $idevento");
 			if(pg_num_rows($resultdata) > 0){
 				while ($row = pg_fetch_array($resultdata)) {
 					$data = array();
 					$data["codigo"] = $row["codigo"];
 					$data["data"] = $row["data"];
 					$data["votos"] = $row["votos"];
+					$data["votei"] = $row["case"];
 					array_push($event["datas"], $data);
 				}
 			$event["usuarios"] = array();
