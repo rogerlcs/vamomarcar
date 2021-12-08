@@ -29,16 +29,17 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"])){ 
+if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"])){ 
 	$nome = $_POST["nome"];
 	$local = $_POST["local"];
 	$prazov = $_POST["prazov"];
 	$prazos = $_POST["prazos"];
 	$descricao = $_POST["descricao"];
+	$apelido = $_POST["apelidolocal"];
 	$ids = $_POST["ids"];
 	$arrayid = explode(",", $ids);
 	if($isAuth) {
-		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local')");
+		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco, nome_local) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local', '$apelido')");
 		if($result){
 			$result = pg_query($con, "SELECT MAX(codigo) FROM evento");
 			if (pg_num_rows($result) > 0) {

@@ -1,0 +1,27 @@
+INSERT INTO usuario(nome, FK_ESTADO_id, bio, senha, email, data_nascimento) VALUES ('Roger', 8, 'Palavras não podem expressar minha paixão e amor pelas sextas-feiras!', 'roger','roger@gmail.com','2003-03-24'), 
+('Gustavo', 8, 'De manhã o despertador tocou, mas não respondi','gustavo','gustavo@gmail.com','2003-03-01')
+;
+INSERT INTO evento(nome, descricao, nome_local, prazo_votacao, prazo_sugestao, status_evento, endereco)VALUES 
+('Praia', 'ida a praia','Praia de Jacaraípe', '2021-12-04', '2021-11-01', 0, 'Jacaraípe, Praia'),
+('Futebol', 'fut no golaço','Golaço', '2021-12-04', '2021-12-03', 0, 'R. Nelcy Lopes Vieira, 1000 - Jardim Limoeiro, Serra - ES, 29164-018');
+
+INSERT INTO participa(fk_usuario_codigo, fk_evento_codigo, status_convite) VALUES (1, 1, 0), (2, 1, 0), (1,2,0), (2,2,0);
+
+INSERT INTO datas(data) VALUES ('2021-11-24 15:40:00'), ('2021-11-25 13:00:00');
+
+INSERT INTO agenda_do_evento(fk_evento_codigo, fk_datas_codigo) VALUES (1, 1), (1,2), (2,1);
+
+INSERT INTO vota(fk_usuario_codigo, fk_idagenda) VALUES (1,1), (2,1);
+
+SELECT count(*) FROM vota join agenda_do_evento on(vota.fk_idagenda = agenda_do_evento.idagenda) where agenda_do_evento.fk_datas_codigo = datas.codigo
+
+SELECT dt.*,  FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = 1
+
+SELECT dt.*,(SELECT count(*) as votos FROM vota join agenda_do_evento as agenda on(vota.fk_idagenda = agenda.idagenda) where agenda.fk_datas_codigo = dt.codigo) FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = 1
+
+SELECT vota.fk_usuario_codigo from vota where vota.fk_idagenda = 1 and vota.fk_usuario_codigo = 3
+
+SELECT CASE WHEN EXISTS (SELECT * FROM vota WHERE vota.fk_idagenda = 1 and vota.fk_usuario_codigo = 1) THEN 1 ELSE 0 END
+
+
+SELECT dt.*,(SELECT count(*) as votos FROM vota join agenda_do_evento as agenda on(vota.fk_idagenda = agenda.idagenda) where agenda.fk_datas_codigo = dt.codigo),(SELECT CASE WHEN EXISTS (SELECT * FROM vota JOIN agenda_do_evento AS agenda ON(vota.fk_idagenda = agenda.idagenda) WHERE vota.fk_usuario_codigo = $idusuario) THEN 1 ELSE 0 END) FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = $idevento
