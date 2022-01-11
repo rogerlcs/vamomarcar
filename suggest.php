@@ -43,6 +43,7 @@ if(isset($_POST["data"]) && isset($_POST["idevento"])){
 			$row = pg_fetch_array($result);
 			$iddata = $row["codigo"];
 			$existe = pq_query($con, "SELECT * FROM agenda_do_evento AS agenda WHERE agenda.fk_datas_codigo = $iddata AND agenda.fk_evento_codigo = $idevento");
+			echo $existe;
 			if(pg_num_rows($existe) > 0){
 				$response["success"] = 0;
 				$response["error"] = "Data já sugerida";
