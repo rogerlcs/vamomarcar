@@ -47,12 +47,14 @@ if(isset($_POST["data"]) && isset($_POST["idevento"])){
 				$response["success"] = 0;
 				$response["error"] = "Data já sugerida";
 			}
-			$insert = pg_query($con, "INSERT INTO agenda_do_evento(fk_evento_codigo, fk_datas_codigo) VALUES($idevento,".$iddata["codigo"].")");
-			if($insert){
-				$response["success"] = 1;
-			}
 			else{
-				$response["success"] = 0;
+				$insert = pg_query($con, "INSERT INTO agenda_do_evento(fk_evento_codigo, fk_datas_codigo) VALUES($idevento,".$iddata["codigo"].")");
+				if($insert){
+					$response["success"] = 1;
+				}
+				else{
+					$response["success"] = 0;
+				}
 			}
 		}
 		else{
