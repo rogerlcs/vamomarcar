@@ -10,7 +10,7 @@ $con = pg_connect(getenv("DATABASE_URL"));
 $username = NULL;
 $password = NULL;
 
-$isAuth = true;
+$isAuth = false;
 
 // Método para mod_php (Apache)
 if(isset( $_SERVER['PHP_AUTH_USER'])) {
@@ -43,7 +43,6 @@ if(isset($_POST["data"]) && isset($_POST["idevento"])){
 			$row = pg_fetch_array($result);
 			$iddata = $row["codigo"];
 			$existe = pq_query($con, "SELECT * FROM agenda_do_evento AS agenda WHERE agenda.fk_datas_codigo = $iddata AND agenda.fk_evento_codigo = $idevento");
-			echo $existe;
 			if(pg_num_rows($existe) > 0){
 				$response["success"] = 0;
 				$response["error"] = "Data já sugerida";
