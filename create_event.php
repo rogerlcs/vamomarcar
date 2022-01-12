@@ -52,7 +52,7 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 				}
 				$result1 = pg_query($con, $query);
 				if($result1){
-					$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario)";
+					$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario, $eventoid)";
 					$resultadmin = pg_query($con, $insertadmin);
 					if($resultadmin){
 						$response["success"] = 1;
