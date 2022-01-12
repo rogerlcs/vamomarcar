@@ -62,6 +62,7 @@ if(isset($_GET["idevento"]) && isset($_GET["idusuario"])){
 					$data["votei"] = $row["case"];
 					array_push($event["datas"], $data);
 				}
+			}
 			$event["usuarios"] = array();
 			$resultuser = pg_query($con, "SELECT codigo, nome FROM usuario JOIN participa ON(usuario.codigo = participa.fk_usuario_codigo) WHERE participa.fk_evento_codigo = $idevento");
 			if(pg_num_rows($resultuser) > 0){
@@ -74,7 +75,6 @@ if(isset($_GET["idevento"]) && isset($_GET["idusuario"])){
 			}
 			array_push($response["event"], $event);
 			$response["success"] = 1;
-			}
 			
 		}
 	}
