@@ -1,11 +1,11 @@
 <?php 
 $response = array();
-$con = pg_connect("host=localhost port=5433 dbname=vamomarcar user=postgres password=301224");
+$con = pg_connect(getenv("DATABASE_URL"));
 
 $username = NULL;
 $password = NULL;
 
-$isAuth = true;
+$isAuth = false;
 
 // Método para mod_php (Apache)
 if(isset( $_SERVER['PHP_AUTH_USER'])) {
@@ -52,7 +52,7 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 				$result1 = pg_query($con, $query);
 				if($result1){
 					$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
-					if(pg_num_rows($query) > 0){
+					if(pg_num_rows($query1) > 0){
 						$row = pg_fetch_array($query1);
 						$idusuario = $row["codigo"];
 						$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario, $eventoid)";
