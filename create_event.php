@@ -29,7 +29,8 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"])){ 
+if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"]) && isset($_POST["idusuario"])){ 
+	$idusuario = $_POST["idusuario"];
 	$nome = $_POST["nome"];
 	$local = $_POST["local"];
 	$prazov = $_POST["prazov"];
@@ -51,7 +52,14 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 				}
 				$result1 = pg_query($con, $query);
 				if($result1){
-					$response["success"] = 1;
+					$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario)";
+					$resultadmin = pg_query($con, $insertadmin);
+					if($resultadmin){
+						$response["success"] = 1;
+					}
+					else{
+						$response["success"] = 0;
+					}
 				}
 			}
 			
