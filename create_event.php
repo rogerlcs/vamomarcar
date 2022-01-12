@@ -45,16 +45,16 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 			if (pg_num_rows($result) > 0) {
 				$row = pg_fetch_array($result);
 				$eventoid = $row["max"];
-				$query = "INSERT INTO participa(fk_usuario_codigo, fk_evento_codigo, status_convite) VALUES ($arrayid[0], $eventoid, 0)";
-				for ($i=1; $i < sizeof($arrayid); $i++) {
-					$query .= ",($arrayid[$i],$eventoid, 0)";
-				}
-				$result1 = pg_query($con, $query);
-				if($result1){
-					$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
-					if(pg_num_rows($query1) > 0){
-						$row = pg_fetch_array($query1);
-						$idusuario = $row["codigo"];
+				$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
+				if(pg_num_rows($query1) > 0){
+					$row = pg_fetch_array($query1);
+					$idusuario = $row["codigo"];
+					$query = "INSERT INTO participa(fk_usuario_codigo, fk_evento_codigo, status_convite) VALUES ($idusuario, $eventoid, 1),($arrayid[0], $eventoid, 0)";
+					for ($i=1; $i < sizeof($arrayid); $i++) {
+						$query .= ",($arrayid[$i],$eventoid, 0)";
+					}
+					$result1 = pg_query($con, $query);
+					if($result1){
 						$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario, $eventoid)";
 						$resultadmin = pg_query($con, $insertadmin);
 						if($resultadmin){
@@ -64,10 +64,22 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 							$response["success"] = 0;
 						}
 					}
+					else{
+						$response["success"] = 0;
+					}
+				}
+				else{
+					$response["success"] = 0;
 				}
 			}
+			else{
+				$response["success"] = 0;
+				}
 			
 		}
+		else{
+			$response["success"] = 0;
+			}
 	
 	}
 	else {
