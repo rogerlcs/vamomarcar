@@ -1,11 +1,11 @@
 <?php 
 $response = array();
-$con = pg_connect(getenv("DATABASE_URL"));
+$con = pg_connect("host=localhost port=5433 dbname=vamomarcar user=postgres password=301224");
 
 $username = NULL;
 $password = NULL;
 
-$isAuth = false;
+$isAuth = true;
 
 // Método para mod_php (Apache)
 if(isset( $_SERVER['PHP_AUTH_USER'])) {
@@ -29,8 +29,7 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"]) && isset($_POST["idusuario"])){ 
-	$idusuario = $_POST["idusuario"];
+if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"])){ 
 	$nome = $_POST["nome"];
 	$local = $_POST["local"];
 	$prazov = $_POST["prazov"];
@@ -52,13 +51,18 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 				}
 				$result1 = pg_query($con, $query);
 				if($result1){
-					$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario, $eventoid)";
-					$resultadmin = pg_query($con, $insertadmin);
-					if($resultadmin){
-						$response["success"] = 1;
-					}
-					else{
-						$response["success"] = 0;
+					$query1 = pg_query($con, "SELECT codigo FROM usuario WHERE email='$username'");
+					if(pg_num_rows($query) > 0){
+						$row = pg_fetch_array($query1);
+						$idusuario = $row["codigo"];
+						$insertadmin = "INSERT INTO administra(fk_usuario_codigo, fk_evento_codigo) VALUES ($idusuario, $eventoid)";
+						$resultadmin = pg_query($con, $insertadmin);
+						if($resultadmin){
+							$response["success"] = 1;
+						}
+						else{
+							$response["success"] = 0;
+						}
 					}
 				}
 			}
