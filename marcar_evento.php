@@ -38,7 +38,7 @@ if(isset($_POST["idevento"]) && isset($_POST["iddata"])){
 	$idevento = $_POST["idevento"];
 	$iddata = $_POST["iddata"];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT * FROM administra adm join usuario us on(adm.fk_usuario_codigo = us.codigo) where us.email = '$username'");
+		$result = pg_query($con, "SELECT * FROM administra adm join usuario us on(adm.fk_usuario_codigo = us.codigo) where us.email='$username' AND adm.fk_evento_codigo=$idevento");
 		if(pg_num_rows($result) > 0){
 			$result = pg_query($con, "SELECT * FROM agenda_do_evento WHERE fk_evento_codigo = $idevento AND fk_datas_codigo = $iddata");
 			if(pg_num_rows($result) > 0){
