@@ -52,6 +52,7 @@ if(isset($_GET["id"])){
 				$event["data_marcada"] = $row["data_marcada"];
 				$event["endereco"] = $row["endereco"];
 				$event["descricao"] = $row["descricao"];
+				$event["img"] = $row["img"];
 				$eid = $event["id"];
 				$result1 = pg_query($con, "SELECT COUNT(*) FROM participa JOIN evento on (participa.fk_evento_codigo = evento.codigo) where evento.codigo = $eid");
 				if(pg_num_rows($result1) > 0){
