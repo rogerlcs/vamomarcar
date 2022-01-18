@@ -1,4 +1,6 @@
-<?php 
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL); 
 $response = array();
 $con = pg_connect(getenv("DATABASE_URL"));
 
