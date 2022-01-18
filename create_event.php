@@ -29,7 +29,7 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"])){ 
+if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"] && isset($_FILES['img']))){ 
 	$nome = $_POST["nome"];
 	$local = $_POST["local"];
 	$prazov = $_POST["prazov"];
@@ -37,9 +37,12 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 	$descricao = $_POST["descricao"];
 	$apelido = $_POST["apelidolocal"];
 	$ids = $_POST["ids"];
+	$imageFileType = strtolower(pathinfo(basename($_FILES["img"]["name"]),PATHINFO_EXTENSION));
+	$image_base64 = base64_encode(file_get_contents($_FILES['img']['tmp_name']));
+	$img = 'data:image/'.$imageFileType.';base64,'.$image_base64;
 	$arrayid = explode(",", $ids);
 	if($isAuth) {
-		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco, nome_local) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local', '$apelido')");
+		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco, nome_local,img) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local', '$apelido','$img')");
 		if($result){
 			$result = pg_query($con, "SELECT MAX(codigo) FROM evento");
 			if (pg_num_rows($result) > 0) {

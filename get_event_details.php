@@ -1,4 +1,4 @@
-﻿<?php
+<?php
  
 // array for JSON response
 $response = array();
