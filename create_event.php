@@ -31,7 +31,7 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"] && isset($_FILES['img']))){ 
+if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) && isset($_POST["prazos"]) && isset($_POST["descricao"]) && isset($_POST["ids"]) && isset($_POST["apelidolocal"]) && isset($_FILES['img'])){ 
 	$nome = $_POST["nome"];
 	$local = $_POST["local"];
 	$prazov = $_POST["prazov"];
