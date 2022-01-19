@@ -43,7 +43,7 @@ if(isset($_POST["idevento"])){
 			$idusuario = $row["codigo"];
 			$result = pg_query($con, "SELECT * FROM participa WHERE fk_evento_codigo = $idevento AND fk_usuario_codigo = $idusuario");
 			if(pg_num_rows($result) > 0){
-				$delete = pg_query($con, "DELETE FROM participa WHERE fk_usuario_codigo = $idusuario");
+				$delete = pg_query($con, "DELETE FROM participa WHERE fk_usuario_codigo = $idusuario AND fk_evento_codigo = $idevento");
 				if($delete){
 					$delete = pg_query($con, "DELETE FROM administra WHERE fk_usuario_codigo = $idusuario AND fk_evento_codigo = $idevento");
 					$response["success"] = 1;
