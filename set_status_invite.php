@@ -39,10 +39,12 @@ if(isset($_POST["idusuario"]) && isset($_POST["status"]) && isset($_POST["ideven
 	$idevento = $_POST["idevento"];
 	$status = $_POST["status"];
 	if($isAuth) {
-		if($status == 1){
-			$result = pg_query($con, "UPDATE participa SET status_convite = $status WHERE participa.fk_usuario_codigo = $idusuario AND participa.fk_evento_codigo = $idevento");}
+		if($status == "1"){
+			$result = pg_query($con, "UPDATE participa SET status_convite = $status WHERE participa.fk_usuario_codigo = $idusuario AND participa.fk_evento_codigo = $idevento");
+		}
 		else{
-			$result = pg_query($con, "DELETE FROM participa WHERE participa.fk_usuario_codigo = $idusuario AND participa.fk_evento_codigo = $idevento");}
+			$result = pg_query($con, "DELETE FROM participa WHERE participa.fk_usuario_codigo = $idusuario AND participa.fk_evento_codigo = $idevento");
+		}
 		}
 		if($result){
 			$response["success"] = 1;
