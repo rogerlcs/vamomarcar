@@ -45,7 +45,7 @@ if(isset($_POST["idusuario"]) && isset($_POST["status"]) && isset($_POST["ideven
 		else{
 			$result = pg_query($con, "DELETE FROM participa WHERE participa.fk_usuario_codigo = $idusuario AND participa.fk_evento_codigo = $idevento");
 		}
-		}
+		
 		if($result){
 			$response["success"] = 1;
 		}
