@@ -37,7 +37,7 @@ if(isset($_GET["idevento"]) && isset($_GET["idusuario"])){
 	$idevento = $_GET["idevento"];
 	$idusuario = $_GET["idusuario"];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT * FROM evento where codigo = $idevento");
+		$result = pg_query($con, "SELECT e.*,(SELECT COUNT(*) AS admin FROM administra as adm WHERE adm.fk_evento_codigo = e.codigo AND adm.fk_usuario_codigo = $idusuario) FROM evento AS e where codigo = $idevento");
 		if(pg_num_rows($result) > 0){
 			$row = pg_fetch_array($result);
 			$response['event'] = array();
@@ -52,6 +52,7 @@ if(isset($_GET["idevento"]) && isset($_GET["idusuario"])){
 			$event["endereco"] = $row["endereco"];
 			$event["descricao"] = $row["descricao"];
 			$event["img"] = $row["img"];
+			$event["admin"] = $row["admin"];
 			$event["datas"] = array();
 			$resultdata = pg_query($con, "SELECT dt.*,(SELECT count(*) as votos FROM vota join agenda_do_evento as agenda on(vota.fk_idagenda = agenda.idagenda) where agenda.fk_datas_codigo = dt.codigo),(SELECT CASE WHEN EXISTS (SELECT * FROM vota JOIN agenda_do_evento AS agenda ON(vota.fk_idagenda = agenda.idagenda) WHERE vota.fk_usuario_codigo = $idusuario and agenda.fk_datas_codigo = dt.codigo) THEN 1 ELSE 0 END) FROM datas as dt join agenda_do_evento as agenda on(dt.codigo = agenda.fk_datas_codigo) where agenda.fk_evento_codigo = $idevento");
 			if(pg_num_rows($resultdata) > 0){
