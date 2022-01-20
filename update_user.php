@@ -54,6 +54,7 @@ if(isset($_POST["bio"]) && isset($_POST["name"]) && isset($_POST["birthDate"]) &
 			$update =  pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado, img='$img' WHERE email = '$username'");
 		}
 		else{
+			$response["error"] = "oiiii";
 			$imageFileType = strtolower(pathinfo(basename($_FILES["img"]["name"]),PATHINFO_EXTENSION));
 			$image_base64 = base64_encode(file_get_contents($_FILES['img']['tmp_name']));
 			$img = 'data:image/'.$imageFileType.';base64,'.$image_base64;
@@ -64,7 +65,6 @@ if(isset($_POST["bio"]) && isset($_POST["name"]) && isset($_POST["birthDate"]) &
 		}
 		else{
 			$response["success"] = 0;
-			$response["error"] = "Erro desconhecido";
 		}
 		
 	}
