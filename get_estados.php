@@ -42,7 +42,7 @@ if(!is_null($username)){
 			$response['estados'] = array();
 			while ($row = pg_fetch_array($result)){
 				$estado = array();
-				$estado['nome'] = $row['nome']
+				$estado['nome'] = $row['nome'];
 				array_push($response['estados'], $estado);
 			}
 			$response["success"] = 1;
