@@ -43,6 +43,7 @@ if(isset($_GET["nome"])){
 				$user = array();
 				$user["id"] = $row["codigo"];
 				$user["nome"] = $row["nome"];
+				$user["img"] = $row["img"];
 				array_push($response['users'], $user);
 			}
 			$response["success"] = 1;
