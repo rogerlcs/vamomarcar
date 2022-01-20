@@ -39,7 +39,7 @@ if(!is_null($username)){
 if(isset($_GET["idusuario"])){ 
 	$idusuario = $_GET["idusuario"];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT USUARIO.codigo, USUARIO.nome, USUARIO.bio, USUARIO.data_nascimento, ESTADO.nome as estado from USUARIO LEFT JOIN ESTADO ON(USUARIO.FK_ESTADO_id = ESTADO.id) where USUARIO.codigo = $idusuario");
+		$result = pg_query($con, "SELECT USUARIO.codigo, USUARIO.nome, USUARIO.bio, USUARIO.data_nascimento, USUARIO.img, ESTADO.nome as estado from USUARIO LEFT JOIN ESTADO ON(USUARIO.FK_ESTADO_id = ESTADO.id) where USUARIO.codigo = $idusuario");
 		if(pg_num_rows($result) > 0){
 			$row = pg_fetch_array($result);
 			$response['user'] = array();
@@ -49,6 +49,7 @@ if(isset($_GET["idusuario"])){
 			$user["bio"] = $row["bio"];
 			$user["data_nascimento"] = $row["data_nascimento"];
 			$user["estado"] = $row["estado"];
+			$user["img"] = $row["img"];
 			array_push($response["user"], $user);
 			$response["success"] = 1;
 		}
