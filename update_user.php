@@ -43,25 +43,22 @@ if(isset($_POST["bio"]) && isset($_POST["name"]) && isset($_POST["birthDate"]) &
 	if($isAuth) {
 		if($bio == "" && !isset($_FILES['img'])){
 			$update = pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado WHERE email = '$username'");
-			$response["msg"] =  "nenhum dos dois";
 		}
 		elseif ($bio != "" && !isset($_FILES['img'])) {
-			$response["msg"] = "só bio";
 			$update = pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado, bio='$bio' WHERE email = '$username'");
 		}
 		elseif($bio == "" && isset($_FILES['img'])){
-			$response["msg"] = "só foto";
 			$imageFileType = strtolower(pathinfo(basename($_FILES["img"]["name"]),PATHINFO_EXTENSION));
 			$image_base64 = base64_encode(file_get_contents($_FILES['img']['tmp_name']));
 			$img = 'data:image/'.$imageFileType.';base64,'.$image_base64;
 			$update =  pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado, img='$img' WHERE email = '$username'");
 		}
 		else{
-			$response["msg"] = "os dois";
 			$imageFileType = strtolower(pathinfo(basename($_FILES["img"]["name"]),PATHINFO_EXTENSION));
 			$image_base64 = base64_encode(file_get_contents($_FILES['img']['tmp_name']));
 			$img = 'data:image/'.$imageFileType.';base64,'.$image_base64;
-			 pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado, bio='$bio', img='$img' WHERE email = '$username'");
+			$update = pg_query($con, "UPDATE usuario SET nome='$nome', data_nascimento='$dtNasc', fk_estado_id=$idestado, bio='$bio', img='$img' WHERE email = '$username'");
+			 
 		}
 		if($update){
 			$response["success"] = 1;
