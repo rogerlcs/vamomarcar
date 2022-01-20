@@ -37,7 +37,7 @@ if(!is_null($username)){
 if(isset($_POST["idevento"])){ 
 	$idevento = $_POST["idevento"];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT codigo FROM usuario WHERE email = 'roger@gmail.com'");
+		$result = pg_query($con, "SELECT codigo FROM usuario WHERE email = '$username'");
 		if(pg_num_rows($result) > 0){
 			$row = pg_fetch_array($result);
 			$idusuario = $row["codigo"];
