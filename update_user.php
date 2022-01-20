@@ -64,7 +64,7 @@ if(isset($_POST["bio"]) && isset($_POST["name"]) && isset($_POST["birthDate"]) &
 		}
 		else{
 			$response["success"] = 0;
-			$response["error"] = var_dump($_POST);
+			$response["error"] = "oii";
 		}
 		
 	}
