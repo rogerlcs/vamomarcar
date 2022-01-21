@@ -44,7 +44,7 @@ if(isset($_POST["nome"]) && isset($_POST["local"]) && isset($_POST["prazov"]) &&
 	$img = 'data:image/'.$imageFileType.';base64,'.$image_base64;
 	$arrayid = explode(",", $ids);
 	if($isAuth) {
-		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco, nome_local,img) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local', '$apelido','$img')");
+		$result = pg_query($con, "INSERT INTO evento(nome, descricao, prazo_votacao,prazo_sugestao,status_evento,endereco, nome_local,img, id_criador) VALUES ('$nome', '$descricao', '$prazov', '$prazos', 0, '$local', '$apelido','$img', (SELECT codigo FROM usuario WHERE email = '$username'))");
 		if($result){
 			$result = pg_query($con, "SELECT MAX(codigo) FROM evento");
 			if (pg_num_rows($result) > 0) {
