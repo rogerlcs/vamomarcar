@@ -43,7 +43,7 @@ if(isset($_GET["id"]) && isset($_GET['filter'])){
 		elseif ($filter == "inviteevents") {
 			$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where usuario.codigo = $id AND participa.status_convite = 0");}
 		elseif ($filter == "myevents") {
-			$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where evento.id_criador = $id");
+			$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where usuario.codigo = $id AND evento.id_criador = $id");
 		}
 		if(pg_num_rows($result) > 0){
 			$response['events'] = array();
