@@ -34,10 +34,15 @@ if(!is_null($username)){
 	}
 }
 
-if(isset($_GET["id"])){ 
+if(isset($_GET["id"]) && isset($_GET['filter'])){ 
 	$id = $_GET["id"];
+	$filter = $_GET['filter'];
 	if($isAuth) {
-		$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where usuario.codigo = $id");
+		if($filter == "allevents"){
+			$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where usuario.codigo = $id");}
+		elseif ($filter == "inviteevents") {
+			$result = pg_query($con, "SELECT participa.status_convite, evento.* FROM participa join evento on (participa.fk_evento_codigo = evento.codigo) join usuario on (participa.fk_usuario_codigo = usuario.codigo) where usuario.codigo = $id AND participa.status_convite = 0");}
+		
 		if(pg_num_rows($result) > 0){
 			$response['events'] = array();
 			while($row = pg_fetch_array($result)){
