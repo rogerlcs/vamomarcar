@@ -70,6 +70,10 @@ if(isset($_GET["id"]) && isset($_GET['filter'])){
 			}
 					$response["success"] = 1;
 		}
+		else{
+			$response["success"] = 1;
+			$response["msg"] = "Nenhum Evento";
+		}
 	
 	}
 	else {
